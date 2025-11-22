@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  battle-quiz-server:
+    build: .
+    container_name: quiz-server
+    restart: no
+    ports:
+      - "10000:10000/udp"
+    networks:
+      - game-net
+
+networks:
+  game-net:
+    driver: bridge
