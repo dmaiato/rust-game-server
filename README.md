@@ -21,7 +21,7 @@ The server manages a real-time quiz game for two players over UDP. The game flow
 
 ## 📡 Network Protocol
 
-Communication is done via simple, plain-text UDP messages.
+Communication is done via plain-text UDP messages.
 
 -   **Client to Server:**
     -   `LOGIN:<PlayerName>`: To join the lobby.
@@ -45,13 +45,12 @@ A) ... | B) ...`: Sends the question and options.
 
 1.  **Clone the repository:**
     ```sh
-    git clone <your-repository-url>
-    cd game-server
+    git clone https://github.com/dmaiato/rust-game-server
     ```
 
 2.  **Run the server:**
     ```sh
-    cargo run --release
+    cargo run
     ```
 
 The server will start and listen on `0.0.0.0:10000`.
@@ -78,14 +77,7 @@ Once both players are in, the game will start. Type your answers (`RESPOSTA:A`, 
 
 The project includes files for containerization.
 
--   **Build the Docker image:**
-    ```sh
-    docker build -t battle-quiz-server .
-    ```
-
 -   **Run using Docker Compose:**
     ```sh
-    docker-compose up
+    docker compose up --build
     ```
-
----
