@@ -180,7 +180,7 @@ fn main() -> std::io::Result<()> {
         }
 
         // === FIM DA RODADA ===
-        let placar_msg = format!(
+        let placar_msg: String = format!(
             "PLACAR: {} = {} | {} = {}\nResultado da rodada: Vencedor: {} (+{})",
             players[0].name,
             players[0].score,
@@ -203,7 +203,7 @@ fn main() -> std::io::Result<()> {
         for p in &players {
             if p.score >= 30 {
                 game_running = false;
-                let win_msg = format!("FIM DE JOGO! VENCEDOR: {}", p.name);
+                let win_msg: String = format!("FIM DE JOGO! VENCEDOR: {}", p.name);
                 println!("{}", win_msg);
                 // Avisa ambos
                 for client in &players {
@@ -219,7 +219,7 @@ fn main() -> std::io::Result<()> {
             question_index = 0; // Loop simples para não travar o jogo
         }
 
-        // Pequena pausa antes da próxima questão
+        // Pausa antes da próxima questão
         sleep(Duration::from_secs(2));
     }
 
