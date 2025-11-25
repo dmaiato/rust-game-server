@@ -1,0 +1,25 @@
+Qual protocolo não garante a entrega de pacotes?|A) TCP|B) UDP|C) HTTP|B
+Qual a porta padrão utilizada para o protocolo DNS?|A) 21|B) 53|C) 80|B
+Qual camada do modelo OSI é responsável pelo endereçamento lógico (IP)?|A) Transporte|B) Rede|C) Enlace|B
+O que significa o acrônimo ARP?|A) Address Routing Protocol|B) Address Resolution Protocol|C) Application Resource Protocol|B
+Qual protocolo é usado para transferir arquivos de forma insegura (sem criptografia)?|A) SSH|B) HTTPS|C) FTP|C
+Qual o tamanho em bits de um endereço IPv4?|A) 128 bits|B) 32 bits|C) 64 bits|B
+Qual a máscara de sub-rede padrão para a Classe C em notação CIDR?|A) /8|B) /16|C) /24|C
+O que o ping utiliza para testar a conectividade entre hosts?|A) TCP|B) ARP|C) ICMP|C
+Qual dispositivo opera principalmente na Camada 2 (Enlace) do modelo OSI?|A) Roteador|B) Switch|C) Firewall|B
+Qual o nome dado ao endereço físico (Hardware) de uma interface de rede?|A) IP|B) MAC|C) URL|B
+O que acontece se um host UDP não receber uma resposta do destinatário?|A) Tenta retransmitir|B) Assume que o pacote se perdeu|C) Abre uma conexão TCP|B
+Qual é a porta padrão para o protocolo HTTPS?|A) 80|B) 443|C) 21|B
+Em qual das seguintes camadas está o protocolo HTTP?|A) Aplicação|B) Transporte|C) Sessão|A
+O que o TTL (Time to Live) de um pacote IP define?|A) O tempo de vida da conexão TCP|B) O número máximo de saltos (hops)|C) A velocidade da rede|B
+Qual a forma de comunicação usada pelo TCP para estabelecer uma conexão?|A) Two-Way Handshake|B) Four-Way Handshake|C) Three-Way Handshake|C
+Em qual parte da arquitetura Cliente-Servidor reside a interface gráfica do usuário?|A) Servidor|B) Cliente|C) Protocolo|B
+O que a sigla NAT permite que aconteça em uma rede privada?|A) Acesso à Camada Física|B) Compartilhamento de um único IP público|C) Criptografia de pacotes|B
+Em Rust, qual tipo de String é o dono dos dados na memória Heap?|A) &str|B) String|C) char|B
+Qual método do Rust verifica se um item existe em um Iterador?|A) .find()|B) .contains()|C) .any()|C
+O que o comando 'docker-compose up' faz?|A) Limpa o cache do sistema|B) Constrói e inicia serviços definidos|C) Atualiza o kernel do Linux|B
+Qual número de porta está na faixa de portas bem conhecidas (Well-Known Ports)?|A) 55000|B) 10001|C) 25|C
+Qual das seguintes é uma topologia de rede descentralizada?|A) Estrela|B) Barramento|C) Mesh|C
+Qual o principal objetivo do IPv6 em relação ao IPv4?|A) Aumentar a segurança|B) Ampliar o espaço de endereçamento|C) Diminuir a latência|B
+Qual protocolo é utilizado para alocar IPs dinamicamente para clientes?|A) FTP|B) DHCP|C) SMTP|B
+Qual o conceito de segurança que garante que o dado não foi alterado em trânsito?|A) Confidencialidade|B) Integridade|C) Disponibilidade|B

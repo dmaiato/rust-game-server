@@ -56,19 +56,19 @@ A) ... | B) ...`: Sends the question and options.
 
 The server will start and listen on `0.0.0.0:10000`.
 
-### Playing the Game (using `netcat`)
+### Playing the Game (using `ncat`)
 
-Since there is no dedicated client, you can test the server using a tool like `netcat` (`nc`).
+Since there is no dedicated client, you can test the server using `ncat`, a powerful networking utility that is part of the [Nmap suite](https://nmap.org/ncat/).
 
 1.  **Player 1 Terminal:**
     ```sh
-    nc -u 127.0.0.1 10000
+    ncat --udp 127.0.0.1 10000
     LOGIN:PlayerOne
     ```
 
 2.  **Player 2 Terminal:**
     ```sh
-    nc -u 127.0.0.1 10000
+    ncat --udp 127.0.0.1 10000
     LOGIN:PlayerTwo
     ```
 
