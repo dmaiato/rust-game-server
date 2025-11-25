@@ -1,6 +1,6 @@
 # 🎮 Battle Quiz - Rust Game Server
 
-A simple, zero-dependency, UDP-based 2-player quiz game server written in Rust. 🦀🛠️
+A simple, UDP-based 2-player quiz game server written in Rust. 🦀🛠️
 
 [![Language](https://img.shields.io/badge/language-Rust-rust.svg?style=flat-square)](https://www.rust-lang.org/)
 [![License](https://img.shields.io/badge/license-MIT%20(TBD)-blue.svg?style=flat-square)](./LICENSE)
