@@ -14,6 +14,8 @@ RUN apt-get update && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /usr/src/app/target/release/game_server .
 
+COPY resources/ resources/
+
 EXPOSE 10000/udp
 
-CMD ["./server"]
+CMD ["./game_server"]
