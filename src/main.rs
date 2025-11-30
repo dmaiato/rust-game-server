@@ -8,7 +8,6 @@ use quiz_data::reshuffle_questions;
 use std::io::Error;
 use std::net::UdpSocket;
 use std::str;
-use std::thread::sleep;
 use std::time::Duration;
 
 fn main() -> std::io::Result<()> {
@@ -166,7 +165,7 @@ fn main() -> std::io::Result<()> {
 
         // verifica se alguém atingiu 30 pontos
         for p in &players {
-            if p.score >= 1 {
+            if p.score >= 30 {
                 // game_running = false;
                 let win_msg: String =
                     format!("FIM DE JOGO! VENCEDOR: {} com {} pontos.", p.name, p.score);
@@ -193,7 +192,7 @@ fn main() -> std::io::Result<()> {
         }
 
         if restart_loop {
-            let restart_msg: &str = "DESEJA JOGAR NOVAMENTE? (S/N)";
+            let restart_msg: &str = "DESEJA JOGAR NOVAMENTE?";
             println!("ENVIANDO CONVITE DE REINICIO DE JOGO...");
             for client in &players {
                 socket.send_to(restart_msg.as_bytes(), client.addr)?;
@@ -212,8 +211,6 @@ fn main() -> std::io::Result<()> {
                     if answer_char == 'S' {
                         positive_answers += 1;
                     } else if answer_char == 'N' {
-                        restart_loop = false;
-                        game_running = false;
                         break;
                     }
                 }
@@ -222,10 +219,23 @@ fn main() -> std::io::Result<()> {
             if positive_answers >= 2 {
                 question_index = 0;
                 reshuffle_questions(&mut questions);
+
+                let restart_msg: &str = "O JOGO ESTA REINICIANDO";
+                println!("ENVIANDO MENSAGEM DE REINICIO...");
+                for client in &players {
+                    socket.send_to(restart_msg.as_bytes(), client.addr)?;
+                }
+            } else {
+                restart_loop = false;
+                game_running = false;
+
+                let restart_msg: &str = "JOGO ENCERRADO";
+                println!("ENCERRANDO JOGO...");
+                for client in &players {
+                    socket.send_to(restart_msg.as_bytes(), client.addr)?;
+                }
             }
         }
-
-        sleep(Duration::from_secs(2));
     }
 
     Ok(())
