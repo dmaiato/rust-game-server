@@ -1,9 +1,9 @@
-
 mod models;
 mod quiz_data;
 
 use models::{Player, Question};
 use quiz_data::load_and_shuffle_questions;
+use quiz_data::reshuffle_questions;
 
 use std::io::Error;
 use std::net::UdpSocket;
@@ -11,10 +11,10 @@ use std::str;
 use std::thread::sleep;
 use std::time::Duration;
 
-
 fn main() -> std::io::Result<()> {
-    let questions_result:Result<Vec<Question>, Error> = load_and_shuffle_questions("resources/questions.txt");
-    let questions: Vec<Question> = match questions_result {
+    let questions_result: Result<Vec<Question>, Error> =
+        load_and_shuffle_questions("resources/questions.txt");
+    let mut questions: Vec<Question> = match questions_result {
         Ok(q) => q,
         Err(e) => {
             eprintln!("ERRO FATAL: Falha ao carregar perguntas: {}", e);
@@ -22,7 +22,7 @@ fn main() -> std::io::Result<()> {
             return Err(e);
         }
     };
-    
+
     if questions.is_empty() {
         eprintln!("ERRO FATAL: Nenhuma pergunta válida foi carregada. Verifique o arquivo.");
         return Ok(());
@@ -71,6 +71,7 @@ fn main() -> std::io::Result<()> {
 
     let mut question_index: usize = 0;
     let mut game_running: bool = true;
+    let mut restart_loop: bool = false;
 
     // loop de jogo
     while game_running && question_index < questions.len() {
@@ -120,7 +121,6 @@ fn main() -> std::io::Result<()> {
                         players[player_idx].score += 5;
                         points_awarded = 5;
                         round_winner_idx = Some(player_idx);
-                        round_finished = true;
                     } else {
                         first_error = true;
                     }
@@ -135,10 +135,12 @@ fn main() -> std::io::Result<()> {
                             // se ambos erram
                             points_awarded = 0;
                         }
-                        round_finished = true;
                     }
                 }
                 answered_count += 1;
+                if answered_count == 2 {
+                    round_finished = true
+                }
             }
         }
 
@@ -164,13 +166,15 @@ fn main() -> std::io::Result<()> {
 
         // verifica se alguém atingiu 30 pontos
         for p in &players {
-            if p.score >= 30 {
-                game_running = false;
-                let win_msg: String = format!("FIM DE JOGO! VENCEDOR: {} com {} pontos.", p.name, p.score);
+            if p.score >= 1 {
+                // game_running = false;
+                let win_msg: String =
+                    format!("FIM DE JOGO! VENCEDOR: {} com {} pontos.", p.name, p.score);
                 println!("{}", win_msg);
                 for client in &players {
                     socket.send_to(win_msg.as_bytes(), client.addr)?;
                 }
+                restart_loop = true;
                 break;
             }
         }
@@ -185,7 +189,40 @@ fn main() -> std::io::Result<()> {
                 let msg: &str = "FIM DE JOGO: Todas as perguntas foram usadas.";
                 socket.send_to(msg.as_bytes(), p.addr)?;
             }
-            game_running = false;
+            restart_loop = true;
+        }
+
+        if restart_loop {
+            let restart_msg: &str = "DESEJA JOGAR NOVAMENTE? (S/N)";
+            println!("ENVIANDO CONVITE DE REINICIO DE JOGO...");
+            for client in &players {
+                socket.send_to(restart_msg.as_bytes(), client.addr)?;
+            }
+            println!("AGUARDANDO RESPOSTA DOS JOGADORES...");
+
+            let mut positive_answers: i32 = 0;
+
+            while positive_answers < 2 {
+                let (amt, _) = socket.recv_from(&mut buf)?;
+                let msg: &str = str::from_utf8(&buf[..amt]).unwrap_or("").trim();
+
+                if msg.starts_with("REINICIAR:") {
+                    let answer_char: char = msg.chars().last().unwrap_or(' ');
+
+                    if answer_char == 'S' {
+                        positive_answers += 1;
+                    } else if answer_char == 'N' {
+                        restart_loop = false;
+                        game_running = false;
+                        break;
+                    }
+                }
+            }
+
+            if positive_answers >= 2 {
+                question_index = 0;
+                reshuffle_questions(&mut questions);
+            }
         }
 
         sleep(Duration::from_secs(2));

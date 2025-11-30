@@ -38,3 +38,8 @@ pub fn load_and_shuffle_questions(filename: &str) -> io::Result<Vec<Question>> {
 
     Ok(questions)
 }
+
+pub fn reshuffle_questions(questions: &mut Vec<Question>) {
+    let mut rng = thread_rng();
+    questions.shuffle(&mut rng);
+}
